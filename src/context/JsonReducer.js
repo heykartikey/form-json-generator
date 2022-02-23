@@ -19,15 +19,11 @@ import { reorderField } from "../utils/reorderField";
 import { reorderPage } from "../utils/reorderPage";
 
 import { updatePageTitle } from "../utils/page/updateTitle";
-<<<<<<< HEAD
 import {updatePageId} from '../utils/page/updatePageId';
 
 import {updatePageVertical} from '../utils/page/updateVertical';
 import {updatePageWidth} from '../utils/page/updatePageWidth'; 
 
-=======
-import { updatePageId } from "../utils/page/updatePageId";
->>>>>>> 196b8fcf9f0b41ffef122dc3eab6521aecd739b2
 const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_COMMON":
