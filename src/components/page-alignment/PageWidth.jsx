@@ -7,7 +7,7 @@ export const PageWidth = () => {
 
   const updatePageWidth = (event) => {
     dispatch({
-      type: "UPDATE_PAGE_WIDTH",
+      type: "UPDATE_PAGE_ALIGNMENT",
       data: {
         key: "width",
         value: event.target.valueAsNumber,

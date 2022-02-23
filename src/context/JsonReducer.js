@@ -62,10 +62,8 @@ const reducer = (state, action) => {
       return updatePageTitle(state, action);
     case "UPDATE_PAGE_ID": 
       return updatePageId(state, action); 
-    case "UPDATE_VERTICAL": 
+    case "UPDATE_PAGE_ALIGNMENT": 
       return updatePageAlignment(state, action);
-    case "UPDATE_PAGE_WIDTH": 
-      return updatePageAlignment(state, action); 
     default:
       return state;
   }

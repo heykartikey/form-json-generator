@@ -204,12 +204,6 @@ const FieldsAccordion = ({ expanded, handleExpand }) => {
   );
 };
 
-const PageAlignmentAccordion = () => {
-  const [expanded, setExpanded] = useState("pageAlignment");
-  const handleExpand = (panel) => setExpanded(expanded === panel ? "" : panel);
-  return <PageAlignment expanded={expanded} handleExpand={handleExpand} />;
-};
-
 const Sidebar = () => {
   const { state, dispatch } = useContext(JsonContext);
   window.currentJson = state;
@@ -331,7 +325,7 @@ const Sidebar = () => {
               onChange={handleUpdatePageId}
             />
           </Stack>
-          <PageAlignmentAccordion />
+          <PageAlignment expanded={expanded ==="pageAlignment"} handleExpand={handleExpand} />;
           <FieldsAccordion
             expanded={expanded === "fields"}
             handleExpand={handleExpand}

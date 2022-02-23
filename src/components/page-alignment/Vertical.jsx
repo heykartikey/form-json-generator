@@ -13,7 +13,7 @@ export const Vertical = () => {
 
   const updateVertical = (event) => {
     dispatch({
-      type: "UPDATE_VERTICAL",
+      type: "UPDATE_PAGE_ALIGNMENT",
       data: {
         key: "vertical",
         value: event.target.value,
