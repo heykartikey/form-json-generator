@@ -18,7 +18,7 @@ import { reorderField } from "../utils/reorderField";
 import { reorderPage } from "../utils/reorderPage";
 
 import { updatePageTitle } from "../utils/page/updateTitle";
-
+import {updatePageId} from '../utils/page/updatePageId';
 const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_COMMON":
@@ -54,7 +54,8 @@ const reducer = (state, action) => {
       return reorderPage(state, action);
     case "UPDATE_PAGE_TITLE":
       return updatePageTitle(state, action);
-
+    case "UPDATE_PAGE_ID": 
+      return updatePageId(state, action); 
     default:
       return state;
   }

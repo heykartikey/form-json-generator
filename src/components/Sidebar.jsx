@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import {
   Button,
   Stack,
-  Box,
   IconButton,
   Accordion,
   AccordionSummary,
@@ -255,6 +254,12 @@ const Sidebar = () => {
       data: e.target.value,
     });
   };
+  const handleUpdatePageId = (e) => {
+    dispatch({
+      type: "UPDATE_PAGE_ID",
+      data: e.target.value,
+    });
+  };
   return (
     <Stack
       bgcolor="#f1f1f1"
@@ -297,8 +302,9 @@ const Sidebar = () => {
         />
       ) : isNull(state.currentField) ? (
         <>
-          <Box
+          <Stack
             p={2}
+            gap={2}
             bgcolor="#fff"
             border="1px solid rgba(0, 0, 0, 0.125)"
             borderBottom="none"
@@ -310,7 +316,15 @@ const Sidebar = () => {
               value={state.pages[state.currentPage].title}
               onChange={handleUpdatePageTitle}
             />
-          </Box>
+            <TextField
+              fullWidth
+              mt={2}
+              size="small"
+              label="Page ID"
+              value={state.pages[state.currentPage].pageId}
+              onChange={handleUpdatePageId}
+            />
+          </Stack>
           <PageAlignment />
           <FieldsAccordion
             expanded={expanded === "fields"}
