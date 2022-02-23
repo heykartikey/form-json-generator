@@ -1,14 +1,9 @@
-import { memo } from "react";
 import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
-import { pick } from "lodash";
+import { isNull, pick } from "lodash";
 import { useContext } from "react";
-import {JsonContext} from '../context/JsonContext'; 
+import { JsonContext } from "../context/JsonContext";
 const copyJson = () => {
   const json = pick(window.currentJson, ["pages"]);
-  json.pages.forEach((page, index) => {
-    page.pageId = page.pageId;
-  });
-
   navigator.clipboard.writeText(JSON.stringify(json, null, 2));
 };
 
@@ -21,7 +16,10 @@ const Header = () => {
       <AppBar position="static" elevation={0}>
         <Toolbar variant="dense">
           <Typography component="div" sx={{ flexGrow: 1 }}>
-            Form Json Editor | {"Title will be updated here when page is added"}
+            Form Json Editor -{" "}
+            {!isNull(state.currentPage)
+              ? state.pages[state.currentPage].title
+              : "No Page Added"}
           </Typography>
           <Button color="inherit" onClick={importJson}>
             Import Json

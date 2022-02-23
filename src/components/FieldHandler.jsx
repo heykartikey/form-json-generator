@@ -8,7 +8,20 @@ import DatePickerInput from "./form-fields/DatePickerInput";
 import DividerLine from "./form-fields/DividerLine";
 import SectionLabel from "./form-fields/SectionLabel";
 
+import { useContext } from "react";
+import { JsonContext } from "../context/JsonContext";
+import ContextMenu from "./ContextMenu";
+
 function FieldHandler({ field }) {
+  const { dispatch } = useContext(JsonContext);
+
+  const updateCurrentField = (fieldId) => {
+    dispatch({
+      type: "SET_CURRENT_FIELD",
+      data: fieldId,
+    });
+  };
+
   const {
     viewType = "",
     alignment: { col },
@@ -18,55 +31,92 @@ function FieldHandler({ field }) {
     case "text":
       return (
         <Grid item xs={col}>
-          <Text field={field} />
+          <ContextMenu fieldId={field.fieldId}>
+            <Text
+              field={field}
+              onClick={() => updateCurrentField(field.fieldId)}
+            />
+          </ContextMenu>
         </Grid>
       );
     case "button":
       return (
         <Grid item xs={col}>
-          <FormButton field={field} />
+          <ContextMenu fieldId={field.fieldId}>
+            <FormButton
+              field={field}
+              onClick={() => updateCurrentField(field.fieldId)}
+            />
+          </ContextMenu>
         </Grid>
       );
     case "file":
       return (
         <Grid item xs={col}>
-          <FileInput field={field} />
+          <ContextMenu fieldId={field.fieldId}>
+            <FileInput
+              field={field}
+              onClick={() => updateCurrentField(field.fieldId)}
+            />
+          </ContextMenu>
         </Grid>
       );
     case "autoCompleteText":
       return (
         <Grid item xs={col}>
-          <AutoComplete field={field} />
+          <ContextMenu fieldId={field.fieldId}>
+            <AutoComplete
+              field={field}
+              onClick={() => updateCurrentField(field.fieldId)}
+            />
+          </ContextMenu>
         </Grid>
       );
     case "radioGroup":
       return (
         <Grid item xs={col}>
-          {RadioGroupInput({
-            field,
-          })}
+          <ContextMenu fieldId={field.fieldId}>
+            <RadioGroupInput
+              field={field}
+              onClick={() => updateCurrentField(field.fieldId)}
+            />
+          </ContextMenu>
         </Grid>
       );
     case "date":
       return (
         <Grid item xs={col}>
-          {DatePickerInput({
-            field,
-          })}
+          <ContextMenu fieldId={field.fieldId}>
+            <DatePickerInput
+              field={field}
+              onClick={() => updateCurrentField(field.fieldId)}
+            />
+          </ContextMenu>
         </Grid>
       );
     case "divider":
       return (
         <Grid item xs={col}>
-          <DividerLine />
+          <DividerLine onClick={() => updateCurrentField(field.fieldId)} />
         </Grid>
       );
     case "break":
-      return <Grid item xs={col}></Grid>;
+      return (
+        <Grid
+          item
+          xs={col}
+          onClick={() => updateCurrentField(field.fieldId)}
+        ></Grid>
+      );
     case "sectionTitle":
       return (
         <Grid item xs={col}>
-          <SectionLabel field={field} />
+          <ContextMenu fieldId={field.fieldId}>
+            <SectionLabel
+              field={field}
+              onClick={() => updateCurrentField(field.fieldId)}
+            />
+          </ContextMenu>
         </Grid>
       );
     default:

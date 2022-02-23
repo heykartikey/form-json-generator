@@ -5,6 +5,7 @@ import { updateAlignment } from "../utils/alignment/updateAlignment";
 
 import { updateValidation } from "../utils/validation/updateValidation";
 import { updateLengthValidation } from "../utils/validation/updateLengthValidation";
+import { updateDateValidation } from "../utils/validation/updateDateValidation";
 
 import { setCurrentField } from "../utils/setCurrentField";
 import { addField } from "../utils/addField";
@@ -18,11 +19,15 @@ import { reorderField } from "../utils/reorderField";
 import { reorderPage } from "../utils/reorderPage";
 
 import { updatePageTitle } from "../utils/page/updateTitle";
+<<<<<<< HEAD
 import {updatePageId} from '../utils/page/updatePageId';
 
 import {updatePageVertical} from '../utils/page/updateVertical';
 import {updatePageWidth} from '../utils/page/updatePageWidth'; 
 
+=======
+import { updatePageId } from "../utils/page/updatePageId";
+>>>>>>> 196b8fcf9f0b41ffef122dc3eab6521aecd739b2
 const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_COMMON":
@@ -37,6 +42,8 @@ const reducer = (state, action) => {
       return updateValidation(state, action);
     case "UPDATE_LENGTH_VALIDATION":
       return updateLengthValidation(state, action);
+    case "UPDATE_DATE_VALIDATION":
+      return updateDateValidation(state, action);
 
     case "SET_CURRENT_FIELD":
       return setCurrentField(state, action);

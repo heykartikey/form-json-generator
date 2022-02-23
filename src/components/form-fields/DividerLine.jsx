@@ -1,5 +1,5 @@
 import { Divider } from "@mui/material";
 
-const DividerLine = () => <Divider />;
+const DividerLine = ({ onClick }) => <Divider onClick={onClick} />;
 
 export default DividerLine;

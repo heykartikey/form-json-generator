@@ -31,12 +31,7 @@ const Alignment = ({ expanded, handleExpand }) => (
     <AccordionSummary expandIcon={<ExpandMore />}>
       <Typography variant="subtitle1">Alignment</Typography>
     </AccordionSummary>
-    <AccordionDetails
-    // sx={{
-    //   p: 2,
-    //   borderTop: "1px solid rgba(0, 0, 0, .125)",
-    // }}
-    >
+    <AccordionDetails>
       <Stack gap={2}>
         <Horizontal />
         <ColumnSize />

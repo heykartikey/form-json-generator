@@ -1,7 +1,6 @@
-import { Grid, TextField } from "@mui/material";
-import { useState } from "react";
+import { TextField } from "@mui/material";
 
-export const Text = ({ field }) => {
+export const Text = ({ field, onClick }) => {
   const {
     fieldId,
     title,
@@ -15,7 +14,7 @@ export const Text = ({ field }) => {
 
   return (
     <TextField
-    error
+      onClick={onClick}
       sx={{
         display: visible ? "block" : "none",
       }}
