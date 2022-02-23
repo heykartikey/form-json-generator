@@ -1,6 +1,6 @@
 import { Grid, Button } from "@mui/material";
 
-export const FormButton = ({ field }) => {
+export const FormButton = ({ field, onClick }) => {
   const {
     title,
     enabled,
@@ -10,7 +10,7 @@ export const FormButton = ({ field }) => {
   return (
     <Grid container justifyContent={horizontal}>
       <Grid item>
-        <Button variant={variant} disabled={!enabled}>
+        <Button variant={variant} disabled={!enabled} onClick={onClick}>
           {title}
         </Button>
       </Grid>

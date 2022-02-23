@@ -1,6 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
 
-function AutoComplete({ field }) {
+function AutoComplete({ field, onClick }) {
   const {
     fieldId,
     title,
@@ -12,6 +12,7 @@ function AutoComplete({ field }) {
 
   return (
     <Autocomplete
+      onClick={onClick}
       id={fieldId}
       options={[]}
       disabled={!enabled}

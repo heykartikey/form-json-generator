@@ -8,18 +8,17 @@ import {
 
 import { FileUploadOutlined } from "@mui/icons-material";
 
-export default function FileInput({ field }) {
+export default function FileInput({ field, onClick }) {
   const {
     fieldId,
     title,
-    value,
     placeholder,
     enabled,
     validation: { error },
   } = field;
 
   return (
-    <FormControl disabled={!enabled}>
+    <FormControl disabled={!enabled} onClick={onClick}>
       <FormLabel>{title}</FormLabel>
       <Button
         variant="outlined"
@@ -31,7 +30,6 @@ export default function FileInput({ field }) {
           id={fieldId}
           accept=".jpg, .jpeg, .png, .pdf"
           type="file"
-          value={value}
           hidden
         />
       </Button>

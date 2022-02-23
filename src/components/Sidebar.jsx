@@ -352,37 +352,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-// {state.currentPage  ? (
-//   <PagesAccordion
-//     expanded={expanded === "pages"}
-//     handleExpand={handleExpand}
-//     setAlertType={setAlertType}
-//   />
-// ) : state.currentField ? (
-
-// ) : (
-//
-// )}
-
-{
-  /* <Button
-  disabled={state.currentPage }
-  size="small"
-  variant="contained"
-  color="error"
-  title="Delete this field?"
-  onClick={() => {
-    setAlertType(state.currentField === "" ? "Page" : "Field");
-  }}
->
-  <Delete fontSize="small" />
-</Button>; */
-}
-{
-  /* <AlertDialog
-        alertType={alertType}
-        setAlertType={setAlertType}
-        handleAgree={handleAlertAgree}
-      /> */
-}
