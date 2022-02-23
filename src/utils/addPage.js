@@ -6,6 +6,7 @@ export const addPage = (state) => {
 
   newState.pages.push(_.cloneDeep(defaultPage));
   newState.pages.at(-1).title = `Page ${newState.pages.length}`;
+  newState.pages.at(-1).pageId = newState.pages.length; 
 
   return newState;
 };

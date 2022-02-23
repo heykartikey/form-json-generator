@@ -6,7 +6,7 @@ import {JsonContext} from '../context/JsonContext';
 const copyJson = () => {
   const json = pick(window.currentJson, ["pages"]);
   json.pages.forEach((page, index) => {
-    page.pageId = `${index + 1}`;
+    page.pageId = page.pageId;
   });
 
   navigator.clipboard.writeText(JSON.stringify(json, null, 2));
