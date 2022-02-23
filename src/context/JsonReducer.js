@@ -50,6 +50,8 @@ const reducer = (state, action) => {
       return reorderField(state, action);
     case "REORDER_PAGE":
       return reorderPage(state, action);
+    case "UPDATE_PAGE_TITLE":
+      return updatePageTitle(state, action);
 
     default:
       return state;

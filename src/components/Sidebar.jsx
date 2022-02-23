@@ -29,12 +29,12 @@ const Details = ({ value, edit, del, disabled, handleDrag, handleDrop }) => (
     alignItems="center"
     justifyContent="space-between"
     draggable
-    onDragOver={e => e.preventDefault()}
+    onDragOver={(e) => e.preventDefault()}
     onDragStart={handleDrag}
     onDrop={handleDrop}
     py={1}
     style={{
-      cursor: "grab"
+      cursor: "grab",
     }}
   >
     <Typography noWrap key={value} variant="subtitle2" title={value}>
@@ -55,19 +55,19 @@ const PagesAccordion = ({ expanded, handleExpand }) => {
   const [dragIndex, setDragIndex] = useState(null);
   const { state, dispatch } = useContext(JsonContext);
 
-  const handleDrag = index => {
-    setDragIndex(index)
-  }
+  const handleDrag = (index) => {
+    setDragIndex(index);
+  };
 
-  const handleDrop = index => {
+  const handleDrop = (index) => {
     dispatch({
       type: "REORDER_PAGE",
       data: {
         dragIndex,
-        dropIndex: index
-      }
-    })
-  }
+        dropIndex: index,
+      },
+    });
+  };
 
   const pages = state.pages;
 
@@ -131,19 +131,19 @@ const FieldsAccordion = ({ expanded, handleExpand }) => {
   const [dragIndex, setDragIndex] = useState(null);
   const { state, dispatch } = useContext(JsonContext);
 
-  const handleDrag = index => {
-    setDragIndex(index)
-  }
+  const handleDrag = (index) => {
+    setDragIndex(index);
+  };
 
-  const handleDrop = index => {
+  const handleDrop = (index) => {
     dispatch({
       type: "REORDER_FIELD",
       data: {
         dragIndex,
-        dropIndex: index
-      }
-    })
-  }
+        dropIndex: index,
+      },
+    });
+  };
 
   const fields = state.pages[state.currentPage].fields;
 
@@ -207,7 +207,7 @@ const PageAlignment = () => null;
 
 const Sidebar = () => {
   const { state, dispatch } = useContext(JsonContext);
-  window.currentJson = state
+  window.currentJson = state;
 
   const [expanded, setExpanded] = useState("common");
   const handleExpand = (panel) => setExpanded(expanded === panel ? "" : panel);
@@ -249,7 +249,12 @@ const Sidebar = () => {
     });
     setExpanded("fields");
   };
-
+  const handleUpdatePageTitle = (e) => {
+    dispatch({
+      type: "UPDATE_PAGE_TITLE",
+      data: e.target.value,
+    });
+  };
   return (
     <Stack
       bgcolor="#f1f1f1"
@@ -303,6 +308,7 @@ const Sidebar = () => {
               size="small"
               label="Page Title"
               value={state.pages[state.currentPage].title}
+              onChange={handleUpdatePageTitle}
             />
           </Box>
           <PageAlignment />
