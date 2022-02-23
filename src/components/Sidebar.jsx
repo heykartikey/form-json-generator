@@ -23,17 +23,24 @@ import { ChevronLeft, Delete, ExpandMore, Settings } from "@mui/icons-material";
 
 import { isNull } from "lodash";
 
-const Details = ({ value, edit, del, disabled }) => (
+const Details = ({ value, edit, del, disabled, handleDrag, handleDrop }) => (
   <Stack
     direction="row"
     alignItems="center"
     justifyContent="space-between"
-    gap={2}
+    draggable
+    onDragOver={e => e.preventDefault()}
+    onDragStart={handleDrag}
+    onDrop={handleDrop}
+    py={1}
+    style={{
+      cursor: "grab"
+    }}
   >
     <Typography noWrap key={value} variant="subtitle2" title={value}>
       {value}
     </Typography>
-    <Stack direction="row">
+    <Stack direction="row" gap={1}>
       <IconButton disabled={disabled} size="small" onClick={edit}>
         <Settings fontSize="small" />
       </IconButton>
@@ -45,7 +52,22 @@ const Details = ({ value, edit, del, disabled }) => (
 );
 
 const PagesAccordion = ({ expanded, handleExpand }) => {
+  const [dragIndex, setDragIndex] = useState(null);
   const { state, dispatch } = useContext(JsonContext);
+
+  const handleDrag = index => {
+    setDragIndex(index)
+  }
+
+  const handleDrop = index => {
+    dispatch({
+      type: "REORDER_PAGE",
+      data: {
+        dragIndex,
+        dropIndex: index
+      }
+    })
+  }
 
   const pages = state.pages;
 
@@ -83,13 +105,15 @@ const PagesAccordion = ({ expanded, handleExpand }) => {
       </AccordionSummary>
       <AccordionDetails>
         {pages.length > 0 ? (
-          <Stack gap={2}>
+          <Stack>
             {pages.map((page, index) => (
               <Details
                 key={index}
                 value={page.title}
                 edit={() => editPage(index)}
                 del={() => deletePage(index)}
+                handleDrag={() => handleDrag(index)}
+                handleDrop={() => handleDrop(index)}
               />
             ))}
           </Stack>
@@ -104,7 +128,22 @@ const PagesAccordion = ({ expanded, handleExpand }) => {
 };
 
 const FieldsAccordion = ({ expanded, handleExpand }) => {
+  const [dragIndex, setDragIndex] = useState(null);
   const { state, dispatch } = useContext(JsonContext);
+
+  const handleDrag = index => {
+    setDragIndex(index)
+  }
+
+  const handleDrop = index => {
+    dispatch({
+      type: "REORDER_FIELD",
+      data: {
+        dragIndex,
+        dropIndex: index
+      }
+    })
+  }
 
   const fields = state.pages[state.currentPage].fields;
 
@@ -142,13 +181,15 @@ const FieldsAccordion = ({ expanded, handleExpand }) => {
       </AccordionSummary>
       <AccordionDetails>
         {fields.length > 0 ? (
-          <Stack gap={2}>
-            {fields?.map(({ fieldId }) => (
+          <Stack>
+            {fields?.map(({ fieldId }, index) => (
               <Details
                 key={fieldId}
                 value={fieldId}
                 edit={() => editField(fieldId)}
                 del={() => deleteField(fieldId)}
+                handleDrag={() => handleDrag(index)}
+                handleDrop={() => handleDrop(index)}
               />
             ))}
           </Stack>

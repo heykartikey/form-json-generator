@@ -14,6 +14,9 @@ import { addPage } from "../utils/addPage";
 import { deletePage } from "../utils/deletePage";
 import { setCurrentPage } from "../utils/setCurrentPage";
 
+import { reorderField } from "../utils/reorderField";
+import { reorderPage } from "../utils/reorderPage";
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_COMMON":
@@ -42,6 +45,11 @@ const reducer = (state, action) => {
       return addPage(state);
     case "DELETE_PAGE":
       return deletePage(state, action);
+
+    case "REORDER_FIELD":
+      return reorderField(state, action);
+    case "REORDER_PAGE":
+      return reorderPage(state, action);
 
     default:
       return state;
