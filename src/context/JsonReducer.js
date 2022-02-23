@@ -19,6 +19,10 @@ import { reorderPage } from "../utils/reorderPage";
 
 import { updatePageTitle } from "../utils/page/updateTitle";
 import {updatePageId} from '../utils/page/updatePageId';
+
+import {updatePageVertical} from '../utils/page/updateVertical';
+import {updatePageWidth} from '../utils/page/updatePageWidth'; 
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_COMMON":
@@ -56,6 +60,10 @@ const reducer = (state, action) => {
       return updatePageTitle(state, action);
     case "UPDATE_PAGE_ID": 
       return updatePageId(state, action); 
+    case "UPDATE_VERTICAL": 
+      return updatePageVertical(state, action);
+    case "UPDATE_PAGE_WIDTH": 
+      return updatePageWidth(state, action); 
     default:
       return state;
   }
