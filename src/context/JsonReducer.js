@@ -17,6 +17,8 @@ import { setCurrentPage } from "../utils/setCurrentPage";
 import { reorderField } from "../utils/reorderField";
 import { reorderPage } from "../utils/reorderPage";
 
+import { updatePageTitle } from "../utils/page/updateTitle";
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_COMMON":
