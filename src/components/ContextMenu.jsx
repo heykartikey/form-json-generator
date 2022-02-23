@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Menu, MenuItem } from "@mui/material";
 
-const ContextMenu = ({ fieldId, children }) => {
+const ContextMenu = ({ fieldId, showListValues = false, children }) => {
   const [contextMenu, setContextMenu] = useState(null);
 
   const handleContextMenu = (event) => {
@@ -33,7 +33,9 @@ const ContextMenu = ({ fieldId, children }) => {
             : undefined
         }
       >
-        <MenuItem onClick={handleClose}>Add List Values</MenuItem>
+        {showListValues && (
+          <MenuItem onClick={handleClose}>Add List Values</MenuItem>
+        )}
         <MenuItem onClick={handleClose}>Add/Edit Events</MenuItem>
         {/* <MenuItem onClick={handleClose}>EntryLimitReached</MenuItem> */}
       </Menu>

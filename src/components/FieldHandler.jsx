@@ -64,7 +64,7 @@ function FieldHandler({ field }) {
     case "autoCompleteText":
       return (
         <Grid item xs={col}>
-          <ContextMenu fieldId={field.fieldId}>
+          <ContextMenu fieldId={field.fieldId} showListValues>
             <AutoComplete
               field={field}
               onClick={() => updateCurrentField(field.fieldId)}
@@ -75,7 +75,7 @@ function FieldHandler({ field }) {
     case "radioGroup":
       return (
         <Grid item xs={col}>
-          <ContextMenu fieldId={field.fieldId}>
+          <ContextMenu fieldId={field.fieldId} showListValues>
             <RadioGroupInput
               field={field}
               onClick={() => updateCurrentField(field.fieldId)}
