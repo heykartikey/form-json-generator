@@ -69,6 +69,7 @@ const FormVisualizer = () => {
                 direction={direction}
                 justifyContent="flex-start"
                 spacing={3}
+              width={page.alignment.width}
               >
                 {hasRowRadio1.map((field, index) => (
                   <>
@@ -77,7 +78,7 @@ const FormVisualizer = () => {
                     )}
 
                     <Grid item xs={field.alignment.col || 6}>
-                      {field.title}
+                      {field.title ?? "Radio"}
                     </Grid>
                   </>
                 ))}

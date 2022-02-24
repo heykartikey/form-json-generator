@@ -1,18 +1,22 @@
 import { Grid, Button, FormHelperText } from "@mui/material";
+import { useContext } from "react";
+import { JsonContext } from "../../context/JsonContext";
 
-const options = [
+const initialOptions = [
   {
-    internalName: "Yes",
-    displayName: "Yes",
-  },
-  {
-    internalName: "No",
-    displayName: "No",
+    internalName: "null",
+    displayName: "Make sure you add list values (if any)!",
   },
 ];
 
 export default function RadioGroupInput({ field, onClick }) {
   const { fieldId, value, enabled, validation: { error } = {} } = field;
+  const { state } = useContext(JsonContext);
+
+  const options =
+    state.pages[state.currentPage].fields.find(
+      (field) => fieldId === field.fieldId
+    )?.listValues?.values ?? initialOptions;
 
   return (
     <>
