@@ -31,7 +31,11 @@ const FormVisualizer = () => {
   });
 
   return (
-    <>
+    <div
+      style={{
+        width: page.alignment.width,
+      }}
+    >
       {rows.map((row, index) => {
         let justifyContent = "space-between";
         switch (row.alignment?.horizontal) {
@@ -69,7 +73,6 @@ const FormVisualizer = () => {
                 direction={direction}
                 justifyContent="flex-start"
                 spacing={3}
-              width={page.alignment.width}
               >
                 {hasRowRadio1.map((field, index) => (
                   <>
@@ -100,7 +103,7 @@ const FormVisualizer = () => {
           </>
         );
       })}
-    </>
+    </div>
   );
 };
 
