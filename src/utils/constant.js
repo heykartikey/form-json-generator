@@ -9,6 +9,7 @@ export const defaultField = {
   alignment: {
     col: 6,
     row: "new",
+    direction: "row",
     horizontal: "center",
     variant: "outlined",
   },
