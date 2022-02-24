@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { Menu, MenuItem } from "@mui/material";
+import {
+  Divider,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import ListValuesModal from "./modals/list-values";
+import { Add, Delete, ListAlt } from "@mui/icons-material";
 
 const ContextMenu = ({ fieldId, showListValues = false, children }) => {
   const [contextMenu, setContextMenu] = useState(null);
@@ -27,6 +34,10 @@ const ContextMenu = ({ fieldId, showListValues = false, children }) => {
     setContextMenu(null);
   };
 
+  const deleteField = () => {
+    handleClose();
+  };
+
   return (
     <>
       <div onContextMenu={handleContextMenu} style={{ cursor: "context-menu" }}>
@@ -43,12 +54,28 @@ const ContextMenu = ({ fieldId, showListValues = false, children }) => {
         >
           {showListValues && (
             <MenuItem onClick={() => openModal("listValues")}>
-              Add List Values
+              <ListItemIcon>
+                <ListAlt />
+              </ListItemIcon>
+              <ListItemText
+                primary="List Values"
+                secondary="Add or Edit List Values"
+              />
             </MenuItem>
           )}
           <MenuItem onClick={() => openModal("events")}>
-            Add/Edit Events
+            <ListItemIcon>
+              <Add />
+            </ListItemIcon>
+            <ListItemText primary="Events" secondary="Add or Edit Events" />
           </MenuItem>
+          {/* <Divider />
+          <MenuItem onClick={deleteField}>
+            <ListItemIcon>
+              <Delete />
+            </ListItemIcon>
+            <ListItemText primary="Delete" secondary="Delete this field?" />
+          </MenuItem> */}
         </Menu>
       </div>
       {showListValues && (
