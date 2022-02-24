@@ -10,7 +10,8 @@ const FormVisualizer = () => {
 
   if (isNull(state.currentPage)) return null;
 
-  const { fields = [] } = state.pages.at(state.currentPage) ?? {};
+  const page = state.pages.at(state.currentPage) ?? {};
+  const { fields = [] } = page;
 
   let rows = [];
   let currentRow = -1;
@@ -30,7 +31,7 @@ const FormVisualizer = () => {
   });
 
   return (
-    <Grid container spacing={3} width="56%">
+    <>
       {rows.map((row, index) => {
         let justifyContent = "space-between";
         switch (row.alignment?.horizontal) {
@@ -89,6 +90,7 @@ const FormVisualizer = () => {
               direction={direction}
               justifyContent={justifyContent}
               spacing={3}
+              width={page.alignment.width}
             >
               {row.fields.map((field, index) => (
                 <FieldHandler key={field.fieldId} field={field} />
@@ -97,7 +99,7 @@ const FormVisualizer = () => {
           </>
         );
       })}
-    </Grid>
+    </>
   );
 };
 

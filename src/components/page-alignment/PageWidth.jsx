@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import { JsonContext } from "../../context/JsonContext";
-import {useContext} from 'react';
+import { useContext } from "react";
 export const PageWidth = () => {
   const { state, dispatch } = useContext(JsonContext);
   const value = state.pages[state.currentPage].alignment.width;
@@ -10,10 +10,11 @@ export const PageWidth = () => {
       type: "UPDATE_PAGE_ALIGNMENT",
       data: {
         key: "width",
-        value: event.target.valueAsNumber,
+        value: event.target.valueAsNumber + "%",
       },
     });
   };
+
   return (
     <TextField
       fullWidth
@@ -21,7 +22,7 @@ export const PageWidth = () => {
       type="number"
       label="Width (in %)"
       inputProps={{ min: 0, max: 100 }}
-      value={value}
+      value={value?.split("%")[0] | 0}
       onChange={updatePageWidth}
     />
   );

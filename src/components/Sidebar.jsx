@@ -22,7 +22,7 @@ import { ChevronLeft, Delete, ExpandMore, Settings } from "@mui/icons-material";
 
 import { isNull } from "lodash";
 
-import {PageAlignment} from '../components/page-alignment/PageAlignment';
+import { PageAlignment } from "../components/page-alignment/PageAlignment";
 
 const Details = ({ value, edit, del, disabled, handleDrag, handleDrop }) => (
   <Stack
@@ -325,7 +325,10 @@ const Sidebar = () => {
               onChange={handleUpdatePageId}
             />
           </Stack>
-          <PageAlignment expanded={expanded ==="pageAlignment"} handleExpand={handleExpand} />;
+          <PageAlignment
+            expanded={expanded === "pageAlignment"}
+            handleExpand={handleExpand}
+          />
           <FieldsAccordion
             expanded={expanded === "fields"}
             handleExpand={handleExpand}

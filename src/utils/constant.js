@@ -25,7 +25,7 @@ export const defaultField = {
 export const defaultPage = {
   alignment: {
     width: "65%",
-    vertical: "start",
+    vertical: "top",
   },
   fields: [],
 };
