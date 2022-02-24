@@ -7,6 +7,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import ListValuesModal from "./modals/list-values";
+import EventActionModal from './modals/events/EventActionModal';
 import { Add, Delete, ListAlt } from "@mui/icons-material";
 
 const ContextMenu = ({ fieldId, showListValues = false, children }) => {
@@ -85,6 +86,9 @@ const ContextMenu = ({ fieldId, showListValues = false, children }) => {
           fieldId={fieldId}
         />
       )}
+      {
+        <EventActionModal open={modalOpen === "events"} handleClose={setModalOpen} fieldId={fieldId} />
+      }
     </>
   );
 };

@@ -20,7 +20,12 @@ export const defaultField = {
     lengthValidation: {},
     dateValidation: {},
   },
-  events: {},
+  events: [
+    { type: "onSelect", actions: [] },
+    { type: "onClick", actions: [] },
+    { type: "onSubmit", actions: [] },
+    { type: "onEntryLimitReach", entryLimit: 0, actions: [] },
+  ],
 };
 
 export const defaultPage = {
