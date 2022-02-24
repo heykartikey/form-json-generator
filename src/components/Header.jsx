@@ -17,7 +17,7 @@ const Header = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" elevation={0}>
+      <AppBar position="fixed">
         <Toolbar variant="dense">
           <Typography component="div" sx={{ flexGrow: 1 }}>
             Form Json Editor -{" "}

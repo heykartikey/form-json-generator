@@ -7,23 +7,16 @@ import Sidebar from "./Sidebar";
 
 const Editor = () => {
   return (
-    <Stack>
+    <>
       <Header />
-      <Box
-        display="grid"
-        gridTemplateColumns="auto 300px"
-        maxHeight="100vh"
-        height={1}
-      >
-        <Stack alignItems="center" maxHeight="100vh" overflow="overlay" pt={7}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <FormVisualizer />
-          </ThemeProvider>
-        </Stack>
+      <Box display="grid" gridTemplateColumns="auto 300px">
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <FormVisualizer />
+        </ThemeProvider>
         <Sidebar />
       </Box>
-    </Stack>
+    </>
   );
 };
 

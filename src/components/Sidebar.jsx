@@ -206,7 +206,6 @@ const FieldsAccordion = ({ expanded, handleExpand }) => {
 
 const Sidebar = () => {
   const { state, dispatch } = useContext(JsonContext);
-  window.currentJson = state;
 
   const [expanded, setExpanded] = useState("common");
   const handleExpand = (panel) => setExpanded(expanded === panel ? "" : panel);
