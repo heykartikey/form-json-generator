@@ -12,8 +12,9 @@ import {
   TextField,
   Typography,
   Divider,
+  Menu,
 } from "@mui/material";
-
+import AddIcon from "@mui/icons-material/Add";
 import { JsonContext } from "../../../context/JsonContext";
 import { Add, Close } from "@mui/icons-material";
 
@@ -35,6 +36,14 @@ const EventTypes = ({ eventType, setEventType }) => (
   </TextField>
 );
 
+const typesOfActions = [
+  "hitApiAndNavigate",
+  "populateDataFromApi",
+  "invisible",
+  "visible",
+  "passValidation",
+  "navigate",
+];
 export default function EventActionsModal({
   open,
   fieldId,
@@ -55,9 +64,21 @@ export default function EventActionsModal({
       (event) => event.type === eventType
     )?.actions;
   }, [eventType]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openMenu = Boolean(anchorEl);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  const addAction = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const updateEvent = (event) => {
+    setEventType(event.target.value);
+  };
+  console.log("Events: ", events);
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
       <DialogTitle id="scroll-dialog-title">
         <Stack
           direction="row"
@@ -75,9 +96,46 @@ export default function EventActionsModal({
           <Stack gap={2}>
             <Stack gap={2} direction="row" justifyContent="space-between">
               <EventTypes eventType={eventType} setEventType={setEventType} />
-              <Button startIcon={<Add />} variant="outlined" size="small">
-                Add Action
-              </Button>
+              <div>
+                <Button
+                  variant="outlined"
+                  startIcon={<AddIcon />}
+                  onClick={addAction}
+                >
+                  Add Action
+                </Button>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={openMenu}
+                  onClose={handleMenuClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  {typesOfActions.map((type) => (
+                    <MenuItem
+                      value={type}
+                      key={type}
+                      onClick={() => {
+                        dispatch({
+                          type: "ADD_ACTION",
+                          data: {
+                            eventType,
+                            fieldId,
+                            value: {
+                              type,
+                            },
+                          },
+                        });
+                        handleMenuClose();
+                      }}
+                    >
+                      {type}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </div>
             </Stack>
           </Stack>
         </DialogContentText>
@@ -85,7 +143,7 @@ export default function EventActionsModal({
           <div>
             {actions.current.map((action) => {
               // TODO: return Action-specific component
-              return null
+              return null;
             })}
           </div>
         ) : (

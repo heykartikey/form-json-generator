@@ -22,7 +22,7 @@ import { updatePageTitle } from "../utils/page/updateTitle";
 import {updatePageId} from '../utils/page/updatePageId';
 
 import {updatePageAlignment} from '../utils/page/updatePageAlignment';
-
+import { addAction } from "../utils/actions/addAction";
 const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_COMMON":
@@ -64,6 +64,8 @@ const reducer = (state, action) => {
       return updatePageId(state, action); 
     case "UPDATE_PAGE_ALIGNMENT": 
       return updatePageAlignment(state, action);
+    case "ADD_ACTION":
+      return addAction(state, action);
     default:
       return state;
   }
