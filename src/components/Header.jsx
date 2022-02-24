@@ -1,16 +1,20 @@
+import { OpenInNew } from "@mui/icons-material";
 import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 import { isNull, pick } from "lodash";
 import { useContext } from "react";
 import { JsonContext } from "../context/JsonContext";
-const copyJson = () => {
-  const json = pick(window.currentJson, ["pages"]);
-  navigator.clipboard.writeText(JSON.stringify(json, null, 2));
-};
 
 const Header = () => {
   const { state } = useContext(JsonContext);
-  // TODO: update state
-  const importJson = () => {};
+
+  const exportJson = () => {
+    const data = new Blob([JSON.stringify(pick(state, ["pages"]), null, 2)], {
+      type: "text/json",
+    });
+
+    window.open(window.URL.createObjectURL(data));
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" elevation={0}>
@@ -21,11 +25,9 @@ const Header = () => {
               ? state.pages[state.currentPage].title
               : "No Page Added"}
           </Typography>
-          <Button color="inherit" onClick={importJson}>
-            Import Json
-          </Button>
-          <Button color="inherit" onClick={copyJson}>
-            Export Json
+          <Button color="inherit">Import Json</Button>
+          <Button color="inherit" onClick={exportJson} endIcon={<OpenInNew />}>
+            Export
           </Button>
         </Toolbar>
       </AppBar>
