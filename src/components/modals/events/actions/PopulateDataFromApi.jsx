@@ -1,18 +1,10 @@
 import {
   Add,
   Cancel,
-  Expand,
-  ExpandMore,
-  ExpandSharp,
 } from "@mui/icons-material";
 import {
-  Accordion,
-  AccordionActions,
-  AccordionDetails,
-  AccordionSummary,
   Button,
   IconButton,
-  ListItemText,
   MenuItem,
   Stack,
   TextField,
@@ -20,12 +12,26 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
+import ActionAccordion from "./ActionAccordion"
+
+import { omit } from "lodash"
+
 const types = ["None", "formFieldId"];
+
+const StateToJson = (arr) => {
+  return arr.reduce((acc, obj) => (
+    {
+      ...acc, [obj.name]: {
+        ...omit(obj, ["name"])
+      }
+    }
+  ), {})
+}
 
 const structure = ({ sourceToTargetFieldIdsMapping, name, params }) => ({
   type: "populateDataFromApi",
   data: {
-    sourceToTargetFieldIdsMapping,
+    sourceToTargetFieldIdsMapping: StateToJson(sourceToTargetFieldIdsMapping),
     apiDetails: {
       name,
       params,
@@ -33,10 +39,16 @@ const structure = ({ sourceToTargetFieldIdsMapping, name, params }) => ({
   },
 });
 
-const PopulateDataFromApi = ({ currentAction, dispatch, eventType }) => {
+const JsonToState = (json = { name: { targetId: "", targetValues: [] } }) => {
+  return Object.entries(json)?.reduce((acc, [key, val]) =>
+    [...acc, { ...val, name: key }]
+    , [])
+}
+
+const PopulateDataFromApi = ({ index, fieldId, currentAction, dispatch, eventType }) => {
   const [json, setJson] = useState({
     sourceToTargetFieldIdsMapping:
-      currentAction?.data?.sourceToTargetFieldIdsMapping ?? {},
+      JsonToState(currentAction?.data?.sourceToTargetFieldIdsMapping),
     name: currentAction?.data?.apiDetails?.page ?? "",
     params: currentAction?.data?.apiDetails?.params ?? [
       {
@@ -85,106 +97,171 @@ const PopulateDataFromApi = ({ currentAction, dispatch, eventType }) => {
     setJson(_json);
   };
 
-  const updateAction = () => {
+  const updateSourceMap = (event, index, tag) => {
+    const _json = {
+      ...json,
+      sourceToTargetFieldIdsMapping: [...json.sourceToTargetFieldIdsMapping]
+    }
+
+    if (tag === "targetValues") {
+      _json.sourceToTargetFieldIdsMapping[index][tag] = event.target.value.split(",");
+    } else {
+      _json.sourceToTargetFieldIdsMapping[index][tag] = event.target.value;
+    }
+
+    setJson(_json)
+  }
+
+  const removeSourceMap = (name) => {
+    const _json = {
+      ...json,
+      sourceToTargetFieldIdsMapping: json.sourceToTargetFieldIdsMapping.filter((param) => param.name !== name),
+    };
+
+    setJson(_json);
+  }
+
+  const addSourceMap = () => {
+    setJson({
+      ...json,
+      sourceToTargetFieldIdsMapping: [...json.sourceToTargetFieldIdsMapping, { name: "", targetId: "", targetValues: [] }],
+    });
+  }
+
+  const saveAction = () => {
     dispatch({
       type: "UPDATE_ACTION",
       data: {
         eventType,
         fieldId,
+        index,
         value: structure(json),
       },
     });
   };
 
   return (
-    <Accordion
-      disableGutters
-      square
-      elevation={0}
-      sx={{
-        ":before": {
-          display: "none",
-        },
-        border: "1px solid rgba(0, 0, 0, .125)",
-        // borderBottom: "none",
-      }}
+    <ActionAccordion
+      index={index}
+      actionType="populateDataFromApi"
+      saveAction={saveAction}
+      eventType={eventType}
+      fieldId={fieldId}
+      dispatch={dispatch}
     >
-      <AccordionSummary expandIcon={<ExpandMore />}>
-        <Stack direction="row" gap={1} alignItems="center">
-          <Typography variant="subtitle1">Action #1:</Typography>
-          <Typography variant="subtitle2">populateDataFromApi</Typography>
-        </Stack>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Stack spacing={2}>
-          <Typography>API Details: </Typography>
-          <TextField
-            size="small"
-            label="API Url"
-            value={json.name}
-            onChange={updateApiDetails}
-          />
-          <Typography>Params: </Typography>
-          {json.params.map((param, i) => (
+      <Stack spacing={2}>
+        <Typography>API Details: </Typography>
+        <TextField
+          size="small"
+          label="API Url"
+          value={json.name}
+          onChange={updateApiDetails}
+        />
+        <Typography>Params: </Typography>
+        {json.params.map((param, i) => (
+          <Stack direction="row" gap={1} key={i}>
+            <TextField
+              sx={{ flex: 1 }}
+              size="small"
+              label="Name"
+              value={param.name}
+              onChange={(event) => updateParams(event, i, "name")}
+            />
+            <TextField
+              sx={{ flex: 1 }}
+              size="small"
+              label="Value"
+              value={param.value}
+              onChange={(event) => updateParams(event, i, "value")}
+            />
+            <TextField
+              sx={{ flex: 1 }}
+              select
+              size="small"
+              label="Type"
+              value={param.type ?? "None"}
+              onChange={(event) => updateParams(event, i, "type")}
+            >
+              {types.map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </TextField>
+            <IconButton
+              color="error"
+              style={{
+                flexBasis: 40,
+              }}
+              onClick={() => removeParam(param.name)}
+            >
+              <Cancel fontSize="small" />
+            </IconButton>
+          </Stack>
+        ))}
+        <Button
+          sx={{
+            alignSelf: "end",
+          }}
+          size="small"
+          variant="contained"
+          startIcon={<Add />}
+          onClick={addParam}
+        >
+          Add Param
+        </Button>
+        <Typography>sourceToTargetFieldIdsMapping:</Typography>
+        {
+          json.sourceToTargetFieldIdsMapping.map((object, i) => (
             <Stack direction="row" gap={1} key={i}>
               <TextField
                 sx={{ flex: 1 }}
                 size="small"
                 label="Name"
-                value={param.name}
-                onChange={(event) => updateParams(event, i, "name")}
+                value={object.name}
+                onChange={(event) => updateSourceMap(event, i, "name")}
               />
               <TextField
                 sx={{ flex: 1 }}
                 size="small"
-                label="Value"
-                value={param.value}
-                onChange={(event) => updateParams(event, i, "value")}
+                label="TargetId"
+                value={object.targetId}
+                onChange={(event) => updateSourceMap(event, i, "targetId")}
               />
               <TextField
                 sx={{ flex: 1 }}
-                select
                 size="small"
-                label="Type"
-                value={param.type ?? "None"}
-                onChange={(event) => updateParams(event, i, "type")}
+                label="Target Values"
+                value={object.targetValues?.join(",") ?? ""}
+                onChange={(event) => updateSourceMap(event, i, "targetValues")}
               >
-                {types.map((type) => (
-                  <MenuItem key={type} value={type}>
-                    {type}
-                  </MenuItem>
-                ))}
               </TextField>
               <IconButton
                 color="error"
                 style={{
                   flexBasis: 40,
                 }}
-                onClick={() => removeParam(param.name)}
+                onClick={() => removeSourceMap(object.name)}
               >
                 <Cancel fontSize="small" />
               </IconButton>
             </Stack>
-          ))}
-          <Button
-            sx={{
-              alignSelf: "end",
-            }}
-            size="small"
-            variant="contained"
-            startIcon={<Add />}
-            onClick={addParam}
-          >
-            Add Param
-          </Button>
-          <pre onClick={updateAction}>{JSON.stringify(json, null, 2)}</pre>
-        </Stack>
-      </AccordionDetails>
-      <AccordionActions>
-        <Button>Remove</Button>
-        <Button>Save</Button>
-      </AccordionActions>
-    </Accordion>
+          ))
+        }
+        <Button
+          sx={{
+            alignSelf: "end",
+          }}
+          size="small"
+          variant="contained"
+          startIcon={<Add />}
+          onClick={addSourceMap}
+        >
+          Add Source Map
+        </Button>
+        <pre>{JSON.stringify(json, null, 2)}</pre>
+      </Stack>
+    </ActionAccordion>
   );
 };
 

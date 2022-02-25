@@ -19,6 +19,12 @@ import { JsonContext } from "../../../context/JsonContext";
 import { Add, Close } from "@mui/icons-material";
 
 import HitApiAndNavigate from "./HitApiAndNavigate";
+import PopulateDataFromApi from "./actions/PopulateDataFromApi";
+
+const actionComp = {
+  hitApiAndNavigate: props => <HitApiAndNavigate {...props} />,
+  populateDataFromApi: props => <PopulateDataFromApi {...props} />,
+}
 
 const eventTypes = ["onSelect", "onClick", "onSubmit", "onEntryLimitReach"];
 
@@ -49,7 +55,7 @@ const typesOfActions = [
 export default function EventActionsModal({
   open,
   fieldId,
-  handleClose = () => {},
+  handleClose = () => { },
 }) {
   const { state, dispatch } = useContext(JsonContext);
   const { events = [] } =
@@ -138,8 +144,9 @@ export default function EventActionsModal({
             <div>
               {events
                 .find((event) => event.type === eventType)
-                ?.actions.map((action, index) => (
-                  <HitApiAndNavigate
+                ?.actions.map((action, index) => {
+                  const ActionComponent = actionComp[action.type]
+                  return <ActionComponent
                     //TODO: better way to make this unique
                     key={action.type + index}
                     fieldId={fieldId}
@@ -148,14 +155,13 @@ export default function EventActionsModal({
                     index={index}
                     currentAction={action}
                   />
-                ))}
+                })}
             </div>
           </Stack>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button>Cancel</Button>
-        <Button variant="contained">Ok</Button>
+        <Button onClick={() => handleClose(null)}>Close</Button>
       </DialogActions>
     </Dialog>
   );
