@@ -22,9 +22,9 @@ import HitApiAndNavigate from "./HitApiAndNavigate";
 import PopulateDataFromApi from "./actions/PopulateDataFromApi";
 
 const actionComp = {
-  hitApiAndNavigate: props => <HitApiAndNavigate {...props} />,
-  populateDataFromApi: props => <PopulateDataFromApi {...props} />,
-}
+  hitApiAndNavigate: (props) => <HitApiAndNavigate {...props} />,
+  populateDataFromApi: (props) => <PopulateDataFromApi {...props} />,
+};
 
 const eventTypes = ["onSelect", "onClick", "onSubmit", "onEntryLimitReach"];
 
@@ -55,7 +55,7 @@ const typesOfActions = [
 export default function EventActionsModal({
   open,
   fieldId,
-  handleClose = () => { },
+  handleClose = () => {},
 }) {
   const { state, dispatch } = useContext(JsonContext);
   const { events = [] } =
@@ -145,16 +145,18 @@ export default function EventActionsModal({
               {events
                 .find((event) => event.type === eventType)
                 ?.actions.map((action, index) => {
-                  const ActionComponent = actionComp[action.type]
-                  return <ActionComponent
-                    //TODO: better way to make this unique
-                    key={action.type + index}
-                    fieldId={fieldId}
-                    eventType={eventType}
-                    dispatch={dispatch}
-                    index={index}
-                    currentAction={action}
-                  />
+                  const ActionComponent = actionComp[action.type];
+                  return (
+                    <ActionComponent
+                      //TODO: better way to make this unique
+                      key={action.type + index}
+                      fieldId={fieldId}
+                      eventType={eventType}
+                      dispatch={dispatch}
+                      index={index}
+                      currentAction={action}
+                    />
+                  );
                 })}
             </div>
           </Stack>

@@ -51,7 +51,7 @@ const ActionAccordion = ({
       </AccordionSummary>
       <AccordionDetails>{children}</AccordionDetails>
       <AccordionActions>
-        <Button onClick={removeAction}>Remove</Button>
+        {/* <Button onClick={removeAction}>Remove</Button> */}
         <Button onClick={() => saveAction(index)}>Save</Button>
       </AccordionActions>
     </Accordion>
