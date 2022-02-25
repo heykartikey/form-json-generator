@@ -19,10 +19,13 @@ import { reorderField } from "../utils/reorderField";
 import { reorderPage } from "../utils/reorderPage";
 
 import { updatePageTitle } from "../utils/page/updateTitle";
-import {updatePageId} from '../utils/page/updatePageId';
+import { updatePageId } from "../utils/page/updatePageId";
 
-import {updatePageAlignment} from '../utils/page/updatePageAlignment';
+import { updatePageAlignment } from "../utils/page/updatePageAlignment";
 import { addAction } from "../utils/actions/addAction";
+import { updateAction } from "../utils/actions/updateAction";
+import { removeAction } from "../utils/actions/removeAction";
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_COMMON":
@@ -60,12 +63,16 @@ const reducer = (state, action) => {
       return reorderPage(state, action);
     case "UPDATE_PAGE_TITLE":
       return updatePageTitle(state, action);
-    case "UPDATE_PAGE_ID": 
-      return updatePageId(state, action); 
-    case "UPDATE_PAGE_ALIGNMENT": 
+    case "UPDATE_PAGE_ID":
+      return updatePageId(state, action);
+    case "UPDATE_PAGE_ALIGNMENT":
       return updatePageAlignment(state, action);
     case "ADD_ACTION":
       return addAction(state, action);
+    case "UPDATE_ACTION":
+      return updateAction(state, action);
+    case "REMOVE_ACTION":
+      return removeAction(state, action);
     default:
       return state;
   }

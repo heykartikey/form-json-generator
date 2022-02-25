@@ -12,6 +12,10 @@ body,
   grid-template-rows: 48px auto;
 }
 
+.MuiAccordion-root + .MuiAccordion-root {
+  border-top: 0;
+}
+
 body {
   margin: 0;
   font-family: "Roboto", sans-serif;

@@ -18,6 +18,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { JsonContext } from "../../../context/JsonContext";
 import { Add, Close } from "@mui/icons-material";
 
+import HitApiAndNavigate from "./HitApiAndNavigate";
+
 const eventTypes = ["onSelect", "onClick", "onSubmit", "onEntryLimitReach"];
 
 const EventTypes = ({ eventType, setEventType }) => (
@@ -57,25 +59,21 @@ export default function EventActionsModal({
 
   const [eventType, setEventType] = useState(events[0]?.type ?? "onSelect");
 
-  const actions = useRef([]);
-
-  useEffect(() => {
-    actions.current = events?.find(
-      (event) => event.type === eventType
-    )?.actions;
-  }, [eventType]);
   const [anchorEl, setAnchorEl] = useState(null);
+
   const openMenu = Boolean(anchorEl);
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
   const addAction = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const updateEvent = (event) => {
     setEventType(event.target.value);
   };
-  console.log("Events: ", events);
 
   return (
     <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose}>
@@ -137,24 +135,23 @@ export default function EventActionsModal({
                 </Menu>
               </div>
             </Stack>
+            <div>
+              {events
+                .find((event) => event.type === eventType)
+                ?.actions.map((action, index) => (
+                  <HitApiAndNavigate
+                    //TODO: better way to make this unique
+                    key={action.type + index}
+                    fieldId={fieldId}
+                    eventType={eventType}
+                    dispatch={dispatch}
+                    index={index}
+                    currentAction={action}
+                  />
+                ))}
+            </div>
           </Stack>
         </DialogContentText>
-        {actions.current.length > 0 ? (
-          <div>
-            {actions.current.map((action) => {
-              // TODO: return Action-specific component
-              return null;
-            })}
-          </div>
-        ) : (
-          <DialogContentText>
-            <Typography
-              sx={{ textAlign: "center", mt: 2, fontStyle: "italic" }}
-            >
-              No actions added yet.
-            </Typography>
-          </DialogContentText>
-        )}
       </DialogContent>
       <DialogActions>
         <Button>Cancel</Button>
